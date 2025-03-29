@@ -1,17 +1,24 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Coursestructure({data}) {
-    
+export default function Coursestructure({ data }) {
+    const handleJoinClick = (e) => {
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        if (!loggedInUser) {
+            e.preventDefault();
+            alert('Please login to access the course!');
+        }
+    };
+
     return (
         <>
             <div className="col-lg-4 col-md-6">
                 <div className="course-item bg-light">
                     <div className="position-relative overflow-hidden">
-                        <img className="img-fluid" src={data.img} />
+                        <img className="img-fluid" src={data.img} alt={data.title} />
                         <div className="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
                             <Link to={data.readlink} className="flex-shrink-0 btn btn-sm btn-primary px-3 border-end" style={{ borderRadius: '30px 0 0 30px' }}>Read More</Link>
-                            <Link to={data.join} className="flex-shrink-0 btn btn-sm btn-primary px-3" style={{ borderRadius: '0 30px 30px 0' }}>Join Now</Link>
+                            <Link to={data.join} className="flex-shrink-0 btn btn-sm btn-primary px-3" style={{ borderRadius: '0 30px 30px 0' }} onClick={handleJoinClick}>Join Now</Link>
                         </div>
                     </div>
                     <div className="text-center p-4 pb-0">
@@ -34,5 +41,5 @@ export default function Coursestructure({data}) {
                 </div>
             </div>
         </>
-    )
+    );
 }
